@@ -3,6 +3,9 @@
   "watchlistlabel": "Watchlist",
   "alertslabel": "Alerts",
   "configlabel": "Config",
+  "notebooklabel": "Notebook",
+  "scannerlabel": "Scanner",
+  "sectorslabel": "Sectors",
 
 
   "organizationSettingsTabLabel": "Organization",

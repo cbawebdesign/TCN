@@ -6,6 +6,9 @@ import {
   Square3Stack3DIcon,
   UserGroupIcon,
   UserIcon,
+  BookOpenIcon,
+  ChartBarIcon,
+  ViewfinderCircleIcon,
 } from '@heroicons/react/24/outline';
 import { BellIcon, CogIcon, ViewIcon } from 'lucide-react';
 
@@ -56,14 +59,34 @@ const NAVIGATION_CONFIG: NavigationConfig = {
         return <CogIcon className={className} />;
       },
     },
-    
-        {
-          label: 'common:profileSettingsTabLabel',
-          path: configuration.paths.settings.profile,
-          Icon: ({ className }: { className: string }) => {
-            return <UserIcon className={className} />;
-          },
-        },
+    {
+      label: 'common:notebooklabel',
+      path: '/notebook',
+      Icon: ({ className }: { className: string }) => {
+        return <BookOpenIcon className={className} />;
+      },
+    },
+    {
+      label: 'common:scannerlabel',
+      path: '/scanner',
+      Icon: ({ className }: { className: string }) => {
+        return <ViewfinderCircleIcon className={className} />;
+      },
+    },
+    {
+      label: 'common:sectorslabel',
+      path: '/sectors',
+      Icon: ({ className }: { className: string }) => {
+        return <ChartBarIcon className={className} />;
+      },
+    },
+    {
+      label: 'common:profileSettingsTabLabel',
+      path: configuration.paths.settings.profile,
+      Icon: ({ className }: { className: string }) => {
+        return <UserIcon className={className} />;
+      },
+    },
     
   
    
