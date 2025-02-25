@@ -43,14 +43,16 @@ export default function FirebaseAuthProvider({
   userSession: Maybe<UserSession>;
   setUserSession: Dispatch<Maybe<UserSession>>;
 }>) {
-  const app = useFirebaseApp();
   const { trigger: signOut } = useDestroySession();
   const userRef = useRef<Maybe<User>>(null);
 
-  // make sure we're not using IndexedDB when SSR
-  // as it is only supported on browser environments
-  const persistence = isBrowser() ? indexedDBLocalPersistence : undefined;
+  // Handle SSR case
+  if (!isBrowser()) {
+    return <>{children}</>;
+  }
 
+  const app = useFirebaseApp();
+  const persistence = indexedDBLocalPersistence;
   const sdk = initializeAuth(app, { persistence });
   const shouldConnectEmulator = useEmulator && !('emulator' in sdk.config);
 

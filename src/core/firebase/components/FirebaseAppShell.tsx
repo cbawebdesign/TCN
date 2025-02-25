@@ -1,18 +1,26 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { FirebaseAppProvider } from 'reactfire';
-import { initializeFirebase } from '../utils/initialize-firebase';
+import { initializeApp } from 'firebase/app';
 
 function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config?: Record<string, string | undefined> }>) {
+  useEffect(() => {
+    // Initialize Firebase app on client-side only
+    if (typeof window !== 'undefined' && config) {
+      try {
+        initializeApp(config);
+      } catch (error) {
+        console.error('Firebase initialization error:', error);
+      }
+    }
+  }, [config]);
+
   // Handle SSR case
   if (typeof window === 'undefined') {
     return <>{children}</>;
   }
 
-  // Always use the provided config from environment variables
-  const firebaseConfig = config;
-
   return (
-    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+    <FirebaseAppProvider firebaseConfig={config || {}}>
       <Suspense fallback={<div>Loading Firebase...</div>}>
         {children}
       </Suspense>

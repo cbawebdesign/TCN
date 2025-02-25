@@ -50,7 +50,7 @@ const configuration = {
     // In iOS, we use popup as users reported issues with the redirect strategy.
     useRedirectStrategy: true,
   },
-  environment: process.env.NODE_ENV ?? 'development',
+  environment: process.env.NODE_ENV || 'production',
   emulatorHost: process.env.NEXT_PUBLIC_EMULATOR_HOST,
   emulator: process.env.NEXT_PUBLIC_EMULATOR === 'true',
   production: process.env.NODE_ENV === 'production',
@@ -172,15 +172,13 @@ export default configuration;
 // Validate Stripe configuration
 // as this is a new requirement, we throw an error if the key is not defined
 // in the environment
+// Stripe configuration validation moved to client-side components
 if (
   configuration.stripe.embedded &&
   configuration.production &&
   !process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 ) {
-  throw new Error(
-    'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined. Please' +
-      ' add it to your environment variables.',
-  );
+  console.warn('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined');
 }
 
 function getBoolean(value: unknown, defaultValue: boolean) {

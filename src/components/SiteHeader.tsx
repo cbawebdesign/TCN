@@ -1,33 +1,42 @@
-import dynamic from 'next/dynamic';
-
-import { useAuth } from 'reactfire';
-
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useUserSession } from '~/core/hooks/use-user-session';
-
+import dynamic from 'next/dynamic';
 import Logo from '~/core/ui/Logo';
 import Container from '~/core/ui/Container';
 import If from '~/core/ui/If';
 import Button from '~/core/ui/Button';
-
 import SiteNavigation from './SiteNavigation';
 import ProfileDropdown from './ProfileDropdown';
+import configuration from '~/configuration';
 
 const DarkModeToggle = dynamic(() => import('~/components/DarkModeToggle'), {
   ssr: false,
 });
 
-import configuration from '~/configuration';
-
 const fixedClassName = `FixedHeader`;
 
-const SiteHeader: React.FCC<{
-  fixed?: boolean;
-}> = ({ fixed }) => {
-  const auth = useAuth();
-  const userSession = useUserSession();
+function AuthButtons() {
+  return (
+    <div className={'hidden space-x-2 lg:flex'}>
+      <Button round variant={'ghost'} href={configuration.paths.signIn}>
+        <span>Sign In</span>
+      </Button>
 
-  const signOutRequested = () => auth.signOut();
+      <Button round href={configuration.paths.signUp}>
+        <span className={'flex items-center space-x-2'}>
+          <span>Sign Up</span>
+          <ChevronRightIcon className={'h-4'} />
+        </span>
+      </Button>
+    </div>
+  );
+}
+
+const HeaderContent = dynamic(() => Promise.resolve(({ fixed }: { fixed?: boolean }) => {
+  const userSession = useUserSession();
+  const signOutRequested = () => {
+    window.location.href = '/auth/sign-out';
+  };
 
   return (
     <div className={`w-full ${fixed ? fixedClassName : ''}`}>
@@ -66,23 +75,10 @@ const SiteHeader: React.FCC<{
       </Container>
     </div>
   );
+}), { ssr: false });
+
+const SiteHeader: React.FC<{ fixed?: boolean }> = (props) => {
+  return <HeaderContent {...props} />;
 };
-
-function AuthButtons() {
-  return (
-    <div className={'hidden space-x-2 lg:flex'}>
-      <Button round variant={'ghost'} href={configuration.paths.signIn}>
-        <span>Sign In</span>
-      </Button>
-
-      <Button round href={configuration.paths.signUp}>
-        <span className={'flex items-center space-x-2'}>
-          <span>Sign Up</span>
-          <ChevronRightIcon className={'h-4'} />
-        </span>
-      </Button>
-    </div>
-  );
-}
 
 export default SiteHeader;

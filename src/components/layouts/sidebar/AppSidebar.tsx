@@ -54,7 +54,11 @@ const AppTopbar = () => {
 
 function ProfileDropdownContainer(props: { collapsed: boolean }) {
   const userSession = useUserSession();
-  const auth = useAuth();
+  
+  // Handle SSR case
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   return (
     <div
@@ -67,7 +71,10 @@ function ProfileDropdownContainer(props: { collapsed: boolean }) {
         displayName={!props.collapsed}
         className="w-full"
         user={userSession?.auth}
-        signOutRequested={() => auth.signOut()}
+        signOutRequested={() => {
+          // Handle sign out through userSession context instead
+          window.location.href = '/auth/sign-out';
+        }}
       />
     </div>
   );
