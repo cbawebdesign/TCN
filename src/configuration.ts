@@ -20,7 +20,15 @@ const configuration = {
     convertKitFormId: '',
     locale: process.env.DEFAULT_LOCALE,
   },
-  firebase: {
+  firebase: process.env.NODE_ENV === 'development' ? {
+    apiKey: 'mock-api-key',
+    authDomain: 'mock-auth-domain',
+    projectId: 'mock-project-id',
+    storageBucket: 'mock-storage-bucket',
+    messagingSenderId: 'mock-sender-id',
+    appId: 'mock-app-id',
+    measurementId: 'mock-measurement-id',
+  } : {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -51,8 +59,8 @@ const configuration = {
     useRedirectStrategy: true,
   },
   environment: process.env.NODE_ENV ?? 'development',
-  emulatorHost: process.env.NEXT_PUBLIC_EMULATOR_HOST,
-  emulator: process.env.NEXT_PUBLIC_EMULATOR === 'true',
+  emulatorHost: process.env.NODE_ENV === 'development' ? 'localhost' : process.env.NEXT_PUBLIC_EMULATOR_HOST,
+  emulator: process.env.NODE_ENV === 'development' ? true : process.env.NEXT_PUBLIC_EMULATOR === 'true',
   production: process.env.NODE_ENV === 'production',
   theme: Themes.Light,
   features: {

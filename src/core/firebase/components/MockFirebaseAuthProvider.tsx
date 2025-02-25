@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthProvider } from 'reactfire';
 import { Auth, User } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {

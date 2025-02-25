@@ -47,7 +47,7 @@ const NAVIGATION_CONFIG: NavigationConfig = {
     },
     {
       label: 'common:alertslabel',
-      path: configuration.paths.appHome,
+      path: '/alerts',
       Icon: ({ className }: { className: string }) => {
         return <BellIcon className={className} />;
       },

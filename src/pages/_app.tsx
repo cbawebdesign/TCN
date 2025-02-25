@@ -104,12 +104,23 @@ function App(
     setCookie(null, 'layout', layoutStyle);
   }, [layoutStyle]);
 
+  const firebaseConfig = process.env.NODE_ENV === 'development' 
+    ? {
+        apiKey: 'mock-api-key',
+        authDomain: 'mock-auth-domain',
+        projectId: 'mock-project-id',
+        storageBucket: 'mock-storage-bucket',
+        messagingSenderId: 'mock-sender-id',
+        appId: 'mock-app-id'
+      }
+    : firebase;
+
   return (
-    <FirebaseAppShell config={firebase}>
+    <FirebaseAppShell config={firebaseConfig}>
       <FirebaseAuthProvider
         userSession={userSession}
         setUserSession={setUserSession}
-        useEmulator={emulator}
+        useEmulator={true}
       >
         <UserSessionContext.Provider value={{ userSession, setUserSession }}>
           <OrganizationContext.Provider

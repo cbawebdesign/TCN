@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback, useEffect, useRef } from 'react';
+import React, { Dispatch, useCallback, useEffect, useRef, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth, useFirebaseApp } from 'reactfire';
 import { i18n } from 'next-i18next';
 import MockFirebaseAuthProvider from './MockFirebaseAuthProvider';
@@ -44,8 +44,12 @@ export default function FirebaseAuthProvider({
 }>) {
   // Use mock provider in development
   if (process.env.NODE_ENV === 'development') {
-    const { MockFirebaseAuthProvider } = require('./MockFirebaseAuthProvider');
-    return <MockFirebaseAuthProvider>{children}</MockFirebaseAuthProvider>;
+    const MockProvider = React.lazy(() => import('./MockFirebaseAuthProvider'));
+    return (
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <MockProvider>{children}</MockProvider>
+      </React.Suspense>
+    );
   }
 
   const app = useFirebaseApp();
