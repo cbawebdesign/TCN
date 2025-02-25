@@ -1,24 +1,23 @@
 import React from 'react';
 import { AuthProvider } from 'reactfire';
 import { Auth, User } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
-// Mock Firebase Auth SDK
-const mockAuth: Partial<Auth> = {
-  languageCode: 'en',
-  config: {},
-  name: 'mock',
-  app: {} as any,
-  currentUser: null,
-  onAuthStateChanged: () => () => {},
-  beforeAuthStateChanged: () => () => {},
-  onIdTokenChanged: () => () => {},
-  updateCurrentUser: async () => {},
-  signOut: async () => {},
-  useDeviceLanguage: () => {},
-  settings: {},
-  tenantId: null
+const firebaseConfig = {
+  apiKey: 'mock-api-key',
+  authDomain: 'mock-auth-domain',
+  projectId: 'mock-project-id',
+  storageBucket: 'mock-storage-bucket',
+  messagingSenderId: 'mock-sender-id',
+  appId: 'mock-app-id'
 };
 
-export default function MockFirebaseAuthProvider({ children }: React.PropsWithChildren) {
-  return <AuthProvider sdk={mockAuth}>{children}</AuthProvider>;
+const app = initializeApp(firebaseConfig, 'mock-app');
+const auth = getAuth(app);
+
+export function MockFirebaseAuthProvider({ children }: React.PropsWithChildren) {
+  return <AuthProvider sdk={auth}>{children}</AuthProvider>;
 }
+
+export default MockFirebaseAuthProvider;

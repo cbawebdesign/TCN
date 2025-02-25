@@ -1,6 +1,7 @@
 import React, { Dispatch, useCallback, useEffect, useRef } from 'react';
 import { AuthProvider, useAuth, useFirebaseApp } from 'reactfire';
 import { i18n } from 'next-i18next';
+import MockFirebaseAuthProvider from './MockFirebaseAuthProvider';
 
 import {
   initializeAuth,
@@ -43,12 +44,13 @@ export default function FirebaseAuthProvider({
 }>) {
   // Use mock provider in development
   if (process.env.NODE_ENV === 'development') {
+    const { MockFirebaseAuthProvider } = require('./MockFirebaseAuthProvider');
     return <MockFirebaseAuthProvider>{children}</MockFirebaseAuthProvider>;
   }
 
   const app = useFirebaseApp();
   const { trigger: signOut } = useDestroySession();
-  const userRef = useRef<Maybe<User>>();
+  const userRef = useRef<Maybe<User>>(null);
 
   // make sure we're not using IndexedDB when SSR
   // as it is only supported on browser environments
