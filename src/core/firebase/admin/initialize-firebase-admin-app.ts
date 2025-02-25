@@ -21,6 +21,14 @@ export async function initializeFirebaseAdminApp() {
   const projectId = configuration.firebase.projectId;
   const storageBucket = configuration.firebase.storageBucket;
 
+  // Use mock credentials in development mode
+  if (process.env.NODE_ENV === 'development') {
+    return admin.initializeApp({
+      credential: admin.credential.cert(require('./mock-service-account.json')),
+      projectId: 'mock-project-id'
+    });
+  }
+
   if (!clientEmail) {
     throw new Error(
       `Cannot create Firebase Admin App. Please provide the client email associated with the service account`,
