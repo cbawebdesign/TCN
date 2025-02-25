@@ -23,6 +23,7 @@ export async function initializeFirebaseAdminApp() {
 
   // Use mock credentials in development mode
   if (process.env.NODE_ENV === 'development') {
+    const admin = require('firebase-admin');
     return admin.initializeApp({
       credential: admin.credential.cert(require('./mock-service-account.json')),
       projectId: 'mock-project-id'
