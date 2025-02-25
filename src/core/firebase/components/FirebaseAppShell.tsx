@@ -21,11 +21,11 @@ function FirebaseProviders({ children }: React.PropsWithChildren) {
   const database = getDatabase(app);
 
   // Initialize Firestore
-  const { status, error } = useInitFirestore(async (firestore) => {
+  const { status, error } = useInitFirestore(async (firestoreInstance) => {
     if (process.env.NODE_ENV === 'development') {
       console.log('Initializing Firestore in development mode');
     }
-    return firestore;
+    return getFirestore(app);
   });
 
   if (status === 'loading') {
