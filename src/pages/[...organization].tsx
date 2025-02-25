@@ -24,20 +24,28 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const path = ['', ...routes.slice(1)].join('/');
 
   if (organizationId) {
-    await initializeFirebaseAdminApp();
+    if (process.env.NODE_ENV !== 'development') {
+      await initializeFirebaseAdminApp();
+    }
 
-    const user = await getLoggedInUser(ctx).catch(() => undefined);
+    // In development mode, mock the user
+    const user = process.env.NODE_ENV === 'development' 
+      ? { uid: 'mock-user-id' }
+      : await getLoggedInUser(ctx).catch(() => undefined);
 
     // if the user is not logged in, redirect to /404
     if (!user) {
       return notFound();
     }
 
-    const organization = await getOrganizationById(organizationId);
+    // In development mode, mock the organization data
+    const organization = process.env.NODE_ENV === 'development'
+      ? { exists: true, data: () => ({ members: { 'mock-user-id': true } }) }
+      : await getOrganizationById(organizationId);
 
     // if the organization exists, we can continue
     if (organization.exists) {
-      const isUserMember = organization.data()?.members[user.uid];
+      const isUserMember = process.env.NODE_ENV === 'development' ? true : organization.data()?.members[user.uid];
 
       // if the user is not an organization member, redirect to /404
       if (!isUserMember) {
