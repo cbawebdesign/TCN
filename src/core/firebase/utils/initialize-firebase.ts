@@ -1,16 +1,6 @@
 import { getApp, initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 
-// Mock config for development mode
-const mockConfig = {
-  apiKey: 'mock-api-key',
-  authDomain: 'mock-auth-domain',
-  projectId: 'mock-project-id',
-  storageBucket: 'mock-storage-bucket',
-  messagingSenderId: 'mock-sender-id',
-  appId: 'mock-app-id'
-};
-
 let firebaseApp: any = null;
 
 /**
@@ -33,19 +23,17 @@ export function initializeFirebase() {
     // Try to get existing app
     firebaseApp = getApp();
   } catch {
-    // Initialize new app with appropriate config
-    const config = process.env.NODE_ENV === 'development' 
-      ? mockConfig 
-      : (window as any).__FIREBASE_CONFIG__;
+    // Initialize new app with config from window
+    const config = (window as any).__FIREBASE_CONFIG__;
 
     if (!config) {
-      console.warn('Firebase config not found. Using mock config for development.');
+      throw new Error('Firebase configuration not found. Please ensure environment variables are set correctly.');
     }
 
-    firebaseApp = initializeApp(config || mockConfig);
+    firebaseApp = initializeApp(config);
 
-    // Initialize Analytics only in production browser environment
-    if (process.env.NODE_ENV === 'production') {
+    // Initialize Analytics in browser environment
+    if (typeof window !== 'undefined') {
       getAnalytics(firebaseApp);
     }
   }

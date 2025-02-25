@@ -8,19 +8,8 @@ function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config
     return <>{children}</>;
   }
 
-  const mockConfig = {
-    apiKey: 'mock-api-key',
-    authDomain: 'mock-auth-domain',
-    projectId: 'mock-project-id',
-    storageBucket: 'mock-storage-bucket',
-    messagingSenderId: 'mock-sender-id',
-    appId: 'mock-app-id'
-  };
-
-  // Initialize Firebase app first
-  const app = initializeFirebase();
-  // In development mode or if no config is provided, use mock config
-  const firebaseConfig = process.env.NODE_ENV === 'development' || !config ? mockConfig : config;
+  // Always use the provided config from environment variables
+  const firebaseConfig = config;
 
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>

@@ -43,14 +43,6 @@ export default function FirebaseAuthProvider({
   userSession: Maybe<UserSession>;
   setUserSession: Dispatch<Maybe<UserSession>>;
 }>) {
-  if (process.env.NODE_ENV === 'development') {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <MockProvider>{children}</MockProvider>
-      </Suspense>
-    );
-  }
-
   const app = useFirebaseApp();
   const { trigger: signOut } = useDestroySession();
   const userRef = useRef<Maybe<User>>(null);
