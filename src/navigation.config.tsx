@@ -19,7 +19,7 @@ type Divider = {
 type NavigationItemLink = {
   label: string;
   path: string;
-  Icon: (props: { className: string }) => JSX.Element;
+  Icon: (props: { className: string }) => React.ReactElement;
   end?: boolean;
 };
 

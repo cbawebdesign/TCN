@@ -30,7 +30,7 @@ const AuthProviderLogo: React.FC<{
   return <>{image}</>;
 };
 
-function getOAuthProviderLogos(): Record<string, string | JSX.Element> {
+function getOAuthProviderLogos(): Record<string, string | React.ReactElement> {
   return {
     ['anonymous']: <EyeSlashIcon className={'h-[22px] w-[22px]'} />,
     ['password']: <AtSymbolIcon className={'h-[22px] w-[22px]'} />,

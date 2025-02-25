@@ -11,22 +11,18 @@ export const TweetTemplate: React.FC<Props> = ({
   saveEnabled = true,
 }) => {
   return (
-    <div className="border-b pb-4">
-      <div className="flex justify-between items-center mb-2">
-        <div>
-          <span className="font-medium">{name}</span>
-          <span className="text-gray-500 ml-2">{account}</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-500">{dateTime}</span>
-          {saveEnabled && (
-            <button className="text-sm text-blue-500 hover:text-blue-600">
-              Save
-            </button>
-          )}
-        </div>
+    <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center border-b pb-4">
+      <div className="flex items-center space-x-2">
+        <span className="font-medium">{name}</span>
+        <span className="text-gray-500">{account}</span>
       </div>
-      <p className="text-gray-800">{content}</p>
+      <span className="text-sm text-gray-500">{dateTime}</span>
+      <button className="text-sm text-blue-500 hover:text-blue-600">
+        {saveEnabled ? 'Save' : 'Unsave'}
+      </button>
+      <div className="col-span-3">
+        <p className="text-gray-800">{content}</p>
+      </div>
     </div>
   );
 };
