@@ -1,13 +1,16 @@
 import React, { Suspense, useEffect } from 'react';
 import { FirebaseAppProvider } from 'reactfire';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 
-function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config?: Record<string, string | undefined> }>) {
+function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config?: Record<string, any> }>) {
   useEffect(() => {
     // Initialize Firebase app on client-side only
     if (typeof window !== 'undefined' && config) {
       try {
-        initializeApp(config);
+        const apps = getApps();
+        if (!apps.length) {
+          initializeApp(config);
+        }
       } catch (error) {
         console.error('Firebase initialization error:', error);
       }
