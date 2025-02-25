@@ -69,7 +69,8 @@ function App(
   const { Component } = props;
   const pageProps = props.pageProps as DefaultPageProps;
   const { firebase } = configuration;
-  const useEmulator = process.env.NODE_ENV === 'development' || configuration.emulator;
+  // Default to true in development, false in production unless explicitly enabled
+  const useEmulator = process.env.NODE_ENV === 'development' || Boolean(configuration.emulator);
 
   const userSessionContext: UserSession = useMemo(() => {
     return {
