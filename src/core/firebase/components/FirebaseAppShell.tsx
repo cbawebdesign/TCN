@@ -16,21 +16,26 @@ const mockConfig = {
 
 // Initialize Firebase app only once
 // Initialize Firebase app only once
-let app: any;
+const getFirebaseApp = () => {
+  if (typeof window === 'undefined') {
+    return {} as any; // Return empty object for SSR
+  }
 
-if (typeof window !== 'undefined') {
   try {
-    app = getApp();
+    return getApp();
   } catch {
     const config = process.env.NODE_ENV === 'development' ? mockConfig : (window as any).__FIREBASE_CONFIG__ || {};
-    app = initializeApp(config);
+    const app = initializeApp(config);
     
-    // Initialize Analytics only in browser environment
-    getAnalytics(app);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Initialized Firebase app in development mode');
+    }
+    
+    return app;
   }
-} else {
-  app = {}; // Return empty object for SSR
-}
+};
+
+const app = getFirebaseApp();
 
 function FirebaseAppShell({
   children,
