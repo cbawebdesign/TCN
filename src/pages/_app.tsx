@@ -68,7 +68,8 @@ function App(
 ) {
   const { Component } = props;
   const pageProps = props.pageProps as DefaultPageProps;
-  const { firebase, emulator } = configuration;
+  const { firebase } = configuration;
+  const useEmulator = process.env.NODE_ENV === 'development' || configuration.emulator;
 
   const userSessionContext: UserSession = useMemo(() => {
     return {
@@ -109,7 +110,7 @@ function App(
       <FirebaseAuthProvider
         userSession={userSession}
         setUserSession={setUserSession}
-        useEmulator={emulator}
+        useEmulator={useEmulator}
       >
         <UserSessionContext.Provider value={{ userSession, setUserSession }}>
           <OrganizationContext.Provider
