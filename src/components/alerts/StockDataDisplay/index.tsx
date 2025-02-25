@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import DataTable from '~/core/ui/DataTable';
-import { useFirestore } from 'reactfire';
 
 interface StockData {
   symbol: string;
@@ -39,9 +38,6 @@ const columns: ColumnDef<StockData>[] = [
 ];
 
 export const StockDataDisplay: FC = () => {
-  // Initialize Firestore - this ensures we're within a Firebase context
-  const firestore = useFirestore();
-
   return (
     <div className="w-full max-w-6xl bg-opacity-70 rounded-xl shadow-2xl backdrop-blur-lg p-6">
       <div className="flex justify-between items-center mb-4">
