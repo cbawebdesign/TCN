@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import configuration from '~/configuration';
+import configuration from '../../../configuration';
 
 let app: admin.app.App | null = null;
 
