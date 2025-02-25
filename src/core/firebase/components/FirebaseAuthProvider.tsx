@@ -33,8 +33,6 @@ export const FirebaseAuthStateListener: React.FCC<{
 
 const MockProvider = lazy(() => import('./MockFirebaseAuthProvider'));
 
-const MockProvider = lazy(() => import('./MockFirebaseAuthProvider'));
-
 export default function FirebaseAuthProvider({
   userSession,
   setUserSession,
