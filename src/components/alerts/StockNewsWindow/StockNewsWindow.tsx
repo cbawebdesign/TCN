@@ -1,12 +1,12 @@
-import React from 'react';
-import { 
+import { FC } from 'react';
+import {
   PressReleaseTemplate,
   TweetTemplate,
   TradeExchangeTemplate,
   FilingsTemplate
 } from '../templates';
 
-export const StockNewsWindow = () => {
+export const StockNewsWindow: FC = () => {
   return (
     <div className="border rounded-lg p-4">
       <h2 className="text-lg font-semibold mb-4">Stock News Window</h2>

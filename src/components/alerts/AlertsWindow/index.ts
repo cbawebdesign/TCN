@@ -1,0 +1,1 @@
+export { AlertsWindow } from './AlertsWindow';

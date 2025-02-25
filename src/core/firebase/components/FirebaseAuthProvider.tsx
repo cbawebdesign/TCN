@@ -41,6 +41,11 @@ export default function FirebaseAuthProvider({
   userSession: Maybe<UserSession>;
   setUserSession: Dispatch<Maybe<UserSession>>;
 }>) {
+  // Use mock provider in development
+  if (process.env.NODE_ENV === 'development') {
+    return <MockFirebaseAuthProvider>{children}</MockFirebaseAuthProvider>;
+  }
+
   const app = useFirebaseApp();
   const { trigger: signOut } = useDestroySession();
   const userRef = useRef<Maybe<User>>();
