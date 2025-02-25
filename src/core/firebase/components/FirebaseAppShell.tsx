@@ -16,13 +16,15 @@ const mockConfig = {
 
 // Initialize Firebase app only once
 const app = (() => {
+  if (typeof window === 'undefined') {
+    return {} as any; // Return empty object for SSR
+  }
+  
   try {
     return getApp('tcn-app');
   } catch {
-    const newApp = initializeApp(
-      process.env.NODE_ENV === 'development' ? mockConfig : (window as any).__FIREBASE_CONFIG__ || {},
-      'tcn-app'
-    );
+    const config = process.env.NODE_ENV === 'development' ? mockConfig : (window as any).__FIREBASE_CONFIG__ || {};
+    const newApp = initializeApp(config, 'tcn-app');
     
     // Initialize Analytics only in browser environment
     if (typeof window !== 'undefined') {
