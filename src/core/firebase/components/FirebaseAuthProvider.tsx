@@ -43,6 +43,10 @@ export default function FirebaseAuthProvider({
   userSession: Maybe<UserSession>;
   setUserSession: Dispatch<Maybe<UserSession>>;
 }>) {
+  const app = useFirebaseApp();
+  const { trigger: signOut } = useDestroySession();
+  const userRef = useRef<Maybe<User>>(null);
+
   if (process.env.NODE_ENV === 'development') {
     return (
       <Suspense fallback={<div>Loading...</div>}>
@@ -50,10 +54,6 @@ export default function FirebaseAuthProvider({
       </Suspense>
     );
   }
-
-  const app = useFirebaseApp();
-  const { trigger: signOut } = useDestroySession();
-  const userRef = useRef<Maybe<User>>(null);
 
   // make sure we're not using IndexedDB when SSR
   // as it is only supported on browser environments
