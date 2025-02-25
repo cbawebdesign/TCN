@@ -22,7 +22,7 @@ const EnrolMultiFactorAuthContainer: React.FC<{
   const auth = useAuth();
   const { trigger: createServerSideSession } = useCreateServerSideSession();
   const [status, setStatus] = useState<Status>(Status.PhoneNumberForm);
-  const verificationIdRef = useRef<string>();
+  const verificationIdRef = useRef<string>('');
 
   const onSuccessfulEnrollment = useCallback(async () => {
     const user = await auth.currentUser;

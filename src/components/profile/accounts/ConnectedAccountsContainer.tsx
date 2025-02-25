@@ -59,7 +59,7 @@ const ConnectedAccountsContainer = () => {
   const [multiFactorAuthError, setMultiFactorAuthError] =
     useState<Maybe<MultiFactorError>>();
 
-  const selectedUnlinkProvider = useRef<string>();
+  const selectedUnlinkProvider = useRef<string>('');
 
   const providerData = useMemo(
     () => user?.providerData ?? [],
@@ -285,7 +285,7 @@ const ConnectedAccountsContainer = () => {
         isOpen={displayUnlinkConfirmationModal}
         setIsOpen={(isOpen) => {
           if (!isOpen) {
-            selectedUnlinkProvider.current = undefined;
+            selectedUnlinkProvider.current = '';
           }
 
           setDisplayUnlinkConfirmationModal(isOpen);
