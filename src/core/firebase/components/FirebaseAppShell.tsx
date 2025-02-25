@@ -17,7 +17,9 @@ function FirebaseAppShell({ children }: React.PropsWithChildren) {
 
   return (
     <FirebaseAppProvider firebaseApp={app} suspense={true}>
-      {children}
+      <Suspense fallback={<div>Loading Firebase...</div>}>
+        {children}
+      </Suspense>
     </FirebaseAppProvider>
   );
 }
