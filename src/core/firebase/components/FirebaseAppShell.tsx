@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { FirebaseAppProvider, AuthProvider, FirestoreProvider, DatabaseProvider } from 'reactfire';
+import { FirebaseAppProvider, AuthProvider, FirestoreProvider, DatabaseProvider, useFirebaseApp } from 'reactfire';
 import { initializeFirebase } from '../utils/initialize-firebase';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
