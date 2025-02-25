@@ -1,1 +1,0 @@
-export { StockDataDisplay } from './StockDataDisplay';
