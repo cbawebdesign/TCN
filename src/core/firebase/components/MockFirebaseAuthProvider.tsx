@@ -13,7 +13,13 @@ const firebaseConfig = {
   appId: 'mock-app-id'
 };
 
-const app = initializeApp(firebaseConfig, 'mock-app');
+const app = (() => {
+  try {
+    return getApp('tcn-app');
+  } catch {
+    return initializeApp(firebaseConfig, 'tcn-app');
+  }
+})();
 const auth = getAuth(app);
 
 export function MockFirebaseAuthProvider({ children }: React.PropsWithChildren) {
