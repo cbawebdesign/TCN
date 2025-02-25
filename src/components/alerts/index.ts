@@ -13,4 +13,4 @@ export {
 export { StockNewsWindow } from './StockNewsWindow';
 export { AlertsWindow } from './AlertsWindow';
 export { CustomNoteLine } from './CustomNoteLine';
-export { StockDataDisplay } from './StockDataDisplay';
+export { StockDataDisplay } from './StockDataDisplay/index';
