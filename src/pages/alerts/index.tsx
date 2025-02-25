@@ -15,11 +15,13 @@ export default function AlertsPage() {
       title="Alerts"
       description="Monitor your stock alerts and notifications"
     >
-      <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-800"}`}>
-        <div className="w-full max-w-6xl mx-auto bg-opacity-70 rounded-xl shadow-2xl backdrop-blur-lg p-6">
-          <div className="space-y-6">
+      <div className={`min-h-screen p-6 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-800"}`}>
+        <div className="w-full max-w-7xl mx-auto space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <StockDataDisplay />
             <StockNewsWindow />
+          </div>
+          <div className="grid grid-cols-1 gap-8">
             <AlertsWindow />
             <CustomNoteLine />
           </div>
