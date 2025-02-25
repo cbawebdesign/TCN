@@ -13,7 +13,7 @@ const configuration = {
     description: 'Your SaaS Description',
     themeColor: '#ffffff',
     themeColorDark: '#0a0a0a',
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL as string,
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     siteName: 'Awesomely',
     twitterHandle: '',
     githubHandle: '',
