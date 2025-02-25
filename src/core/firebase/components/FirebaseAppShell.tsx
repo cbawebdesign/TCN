@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { FirebaseAppProvider } from 'reactfire';
 import { initializeFirebase } from '../utils/initialize-firebase';
 
-function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config: any }>) {
+function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config?: Record<string, string | undefined> }>) {
   // Handle SSR case
   if (typeof window === 'undefined') {
     return <>{children}</>;
@@ -19,11 +19,8 @@ function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config
 
   // Initialize Firebase app first
   const app = initializeFirebase();
-  const firebaseConfig = process.env.NODE_ENV === 'development' ? mockConfig : config;
-
-  if (!app) {
-    return <>{children}</>; // Return children for SSR
-  }
+  // In development mode or if no config is provided, use mock config
+  const firebaseConfig = process.env.NODE_ENV === 'development' || !config ? mockConfig : config;
 
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
