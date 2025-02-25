@@ -5,19 +5,22 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 
-function FirebaseProviders({ app, children }: React.PropsWithChildren<{ app: any }>) {
+function FirebaseProviders({ children }: React.PropsWithChildren) {
+  const app = useFirebaseApp();
   const auth = getAuth(app);
   const firestore = getFirestore(app);
   const database = getDatabase(app);
 
   return (
-    <AuthProvider sdk={auth}>
-      <FirestoreProvider sdk={firestore}>
-        <DatabaseProvider sdk={database}>
-          {children}
-        </DatabaseProvider>
-      </FirestoreProvider>
-    </AuthProvider>
+    <Suspense fallback={<div>Loading Firebase Services...</div>}>
+      <AuthProvider sdk={auth}>
+        <FirestoreProvider sdk={firestore}>
+          <DatabaseProvider sdk={database}>
+            {children}
+          </DatabaseProvider>
+        </FirestoreProvider>
+      </AuthProvider>
+    </Suspense>
   );
 }
 
@@ -37,7 +40,7 @@ function FirebaseAppShell({ children }: React.PropsWithChildren) {
   return (
     <FirebaseAppProvider firebaseApp={app}>
       <Suspense fallback={<div>Loading Firebase...</div>}>
-        <FirebaseProviders app={app}>
+        <FirebaseProviders>
           {children}
         </FirebaseProviders>
       </Suspense>
