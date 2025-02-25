@@ -11,6 +11,17 @@ import LoadingOverlay from '~/core/ui/LoadingOverlay';
 const AuthRedirectListener: React.FCC<{
   whenSignedOut?: string;
 }> = ({ children, whenSignedOut }) => {
+  // bypass auth check in development
+  if (process.env.NODE_ENV === 'development') {
+    return (
+      <div className="min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
   const auth = useAuth();
   const { status, data: signInCheck } = useSigninCheck();
   const redirectUserAway = useRedirectUserAway();

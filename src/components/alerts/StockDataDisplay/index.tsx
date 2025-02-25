@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { ColumnDef } from '@tanstack/react-table';
 import DataTable from '~/core/ui/DataTable';
 
 interface StockData {
@@ -12,21 +13,27 @@ const mockData: StockData[] = [
   { symbol: 'RGTI', percentageChange: 21.5, lastPrice: 10.87 }
 ];
 
-const columns = [
+const columns: ColumnDef<StockData>[] = [
   { 
     header: 'Symb',
     accessorKey: 'symbol',
-    cell: (info: any) => info.getValue()
+    cell: (info) => info.getValue()
   },
   {
     header: '% Ch',
     accessorKey: 'percentageChange',
-    cell: (info: any) => `${info.getValue()}%`
+    cell: (info) => {
+      const value = info.getValue() as number;
+      return `${value}%`;
+    }
   },
   {
     header: 'Last',
     accessorKey: 'lastPrice',
-    cell: (info: any) => info.getValue().toFixed(2)
+    cell: (info) => {
+      const value = info.getValue() as number;
+      return value.toFixed(2);
+    }
   }
 ];
 
