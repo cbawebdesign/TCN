@@ -21,6 +21,11 @@ export async function initializeFirebaseAdminApp() {
   const projectId = configuration.firebase.projectId;
   const storageBucket = configuration.firebase.storageBucket;
 
+  // Skip Firebase Admin initialization in development mode
+  if (process.env.NODE_ENV === 'development') {
+    return null;
+  }
+
   if (!clientEmail) {
     throw new Error(
       `Cannot create Firebase Admin App. Please provide the client email associated with the service account`,

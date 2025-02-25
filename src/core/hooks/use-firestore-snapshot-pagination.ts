@@ -31,7 +31,10 @@ export function useFirestoreSnapshotPagination({
   const snapshotRef = useRef<{
     direction: Direction;
     value: string;
-  }>();
+  }>({
+    direction: 'forward',
+    value: ''
+  });
 
   const onPaginationChange = useCallback(
     (params: { pageIndex: number; value: string }) => {

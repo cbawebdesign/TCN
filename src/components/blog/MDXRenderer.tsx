@@ -1,7 +1,7 @@
 import * as runtime from 'react/jsx-runtime';
 import { Jsx, runSync } from '@mdx-js/mdx';
-import type { NestedMDXComponents } from 'mdx/types';
-import MDXComponents from '~/components/blog/MDXComponents';
+import type { MDXComponents as MDXComponentsType } from 'mdx/types';
+import MDXComponentsList from '~/components/blog/MDXComponents';
 
 function MDXRenderer({ code }: { code: string }) {
   const MDXModule = runSync(code, {
@@ -12,7 +12,7 @@ function MDXRenderer({ code }: { code: string }) {
   });
 
   return (
-    <MDXModule.default components={MDXComponents as NestedMDXComponents} />
+    <MDXModule.default components={MDXComponentsList as MDXComponentsType} />
   );
 }
 

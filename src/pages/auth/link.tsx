@@ -44,7 +44,7 @@ const EmailLinkAuthPage: React.FC<{
 }> = ({ invite }) => {
   const auth = useAuth();
   const router = useRouter();
-  const requestExecutedRef = useRef<boolean>();
+  const requestExecutedRef = useRef<boolean>(false);
 
   const [multiFactorAuthError, setMultiFactorAuthError] =
     useState<Maybe<MultiFactorError>>();

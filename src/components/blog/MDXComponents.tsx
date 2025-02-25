@@ -22,6 +22,7 @@ const NextImage = forwardRef<
   return (
     <div className={'my-6'}>
       <Image
+        alt="Blog image"
         className={className}
         width={Number(width)}
         height={Number(height)}
