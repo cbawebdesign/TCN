@@ -4,13 +4,19 @@ import { initializeFirebase } from '../utils/initialize-firebase';
 
 function FirebaseAppShell({ children }: React.PropsWithChildren) {
   const app = initializeFirebase();
-  
+
+  // Handle SSR case
+  if (typeof window === 'undefined') {
+    return <>{children}</>;
+  }
+
   if (!app) {
-    return <>{children}</>; // Return children for SSR
+    console.error('Failed to initialize Firebase app');
+    return <>{children}</>;
   }
 
   return (
-    <FirebaseAppProvider firebaseApp={app}>
+    <FirebaseAppProvider firebaseApp={app} suspense={true}>
       {children}
     </FirebaseAppProvider>
   );
