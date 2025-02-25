@@ -1,9 +1,6 @@
 import React, { Suspense } from 'react';
-import { FirebaseAppProvider, AuthProvider, FirestoreProvider, DatabaseProvider, useFirebaseApp } from 'reactfire';
+import { FirebaseAppProvider } from 'reactfire';
 import { initializeFirebase } from '../utils/initialize-firebase';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getDatabase } from 'firebase/database';
 
 function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config: any }>) {
   // Handle SSR case
@@ -20,7 +17,13 @@ function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config
     appId: 'mock-app-id'
   };
 
+  // Initialize Firebase app first
+  const app = initializeFirebase();
   const firebaseConfig = process.env.NODE_ENV === 'development' ? mockConfig : config;
+
+  if (!app) {
+    return <>{children}</>; // Return children for SSR
+  }
 
   return (
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
