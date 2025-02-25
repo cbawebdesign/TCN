@@ -32,7 +32,7 @@ function AuthButtons() {
   );
 }
 
-const HeaderContent = dynamic(() => Promise.resolve(({ fixed }: { fixed?: boolean }) => {
+const HeaderContent = dynamic<{ fixed?: boolean }>(() => Promise.resolve(({ fixed }) => {
   const userSession = useUserSession();
   const signOutRequested = () => {
     window.location.href = '/auth/sign-out';
