@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback, useEffect, useRef } from 'react';
+import React, { Dispatch, useCallback, useEffect, useRef, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth, useFirebaseApp } from 'reactfire';
 import { i18n } from 'next-i18next';
 
@@ -31,6 +31,10 @@ export const FirebaseAuthStateListener: React.FCC<{
   return <>{children}</>;
 };
 
+const MockProvider = lazy(() => import('./MockFirebaseAuthProvider'));
+
+const MockProvider = lazy(() => import('./MockFirebaseAuthProvider'));
+
 export default function FirebaseAuthProvider({
   userSession,
   setUserSession,
@@ -41,9 +45,17 @@ export default function FirebaseAuthProvider({
   userSession: Maybe<UserSession>;
   setUserSession: Dispatch<Maybe<UserSession>>;
 }>) {
+  if (process.env.NODE_ENV === 'development') {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <MockProvider>{children}</MockProvider>
+      </Suspense>
+    );
+  }
+
   const app = useFirebaseApp();
   const { trigger: signOut } = useDestroySession();
-  const userRef = useRef<Maybe<User>>();
+  const userRef = useRef<Maybe<User>>(null);
 
   // make sure we're not using IndexedDB when SSR
   // as it is only supported on browser environments
