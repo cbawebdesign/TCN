@@ -14,9 +14,9 @@ const firebaseConfig = {
 
 const app = (() => {
   try {
-    return getApp('tcn-app');
+    return getApp();
   } catch {
-    return initializeApp(firebaseConfig, 'tcn-app');
+    return initializeApp(firebaseConfig);
   }
 })();
 
