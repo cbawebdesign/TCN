@@ -38,6 +38,7 @@ export const StockNewsWindow = () => {
             form="10-K"
             userNotes=""
           />
+        </div>
       </div>
     </div>
   );
