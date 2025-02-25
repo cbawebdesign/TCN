@@ -5,44 +5,27 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 
-function FirebaseProviders({ children }: React.PropsWithChildren) {
-  const app = useFirebaseApp();
-  const auth = getAuth(app);
-  const firestore = getFirestore(app);
-  const database = getDatabase(app);
-
-  return (
-    <Suspense fallback={<div>Loading Firebase Services...</div>}>
-      <AuthProvider sdk={auth}>
-        <FirestoreProvider sdk={firestore}>
-          <DatabaseProvider sdk={database}>
-            {children}
-          </DatabaseProvider>
-        </FirestoreProvider>
-      </AuthProvider>
-    </Suspense>
-  );
-}
-
-function FirebaseAppShell({ children }: React.PropsWithChildren) {
-  const app = initializeFirebase();
-
+function FirebaseAppShell({ children, config }: React.PropsWithChildren<{ config: any }>) {
   // Handle SSR case
   if (typeof window === 'undefined') {
     return <>{children}</>;
   }
 
-  if (!app) {
-    console.error('Failed to initialize Firebase app');
-    return <>{children}</>;
-  }
+  const mockConfig = {
+    apiKey: 'mock-api-key',
+    authDomain: 'mock-auth-domain',
+    projectId: 'mock-project-id',
+    storageBucket: 'mock-storage-bucket',
+    messagingSenderId: 'mock-sender-id',
+    appId: 'mock-app-id'
+  };
+
+  const firebaseConfig = process.env.NODE_ENV === 'development' ? mockConfig : config;
 
   return (
-    <FirebaseAppProvider firebaseApp={app}>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       <Suspense fallback={<div>Loading Firebase...</div>}>
-        <FirebaseProviders>
-          {children}
-        </FirebaseProviders>
+        {children}
       </Suspense>
     </FirebaseAppProvider>
   );
