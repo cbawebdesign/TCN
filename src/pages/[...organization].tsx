@@ -45,7 +45,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
     // if the organization exists, we can continue
     if (organization.exists) {
-      const isUserMember = process.env.NODE_ENV === 'development' ? true : organization.data()?.members[user.uid];
+      const isUserMember = process.env.NODE_ENV === 'development' ? true : (organization.data()?.members as Record<string, any>)?.[user.uid];
 
       // if the user is not an organization member, redirect to /404
       if (!isUserMember) {

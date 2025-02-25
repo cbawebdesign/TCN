@@ -20,7 +20,7 @@ const app = (() => {
     return getApp('tcn-app');
   } catch {
     const newApp = initializeApp(
-      process.env.NODE_ENV === 'development' ? mockConfig : config,
+      process.env.NODE_ENV === 'development' ? mockConfig : (window as any).__FIREBASE_CONFIG__ || {},
       'tcn-app'
     );
     
