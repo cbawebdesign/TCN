@@ -25,7 +25,7 @@ function FirebaseAppShell({
   const app = React.useMemo(() => {
     try {
       return getApp('tcn-app');
-    } catch {
+    } catch (e) {
       return initializeApp(firebaseConfig, 'tcn-app');
     }
   }, [firebaseConfig]);
